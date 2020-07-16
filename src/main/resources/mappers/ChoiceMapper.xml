@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meng.onlinehomework.dao.ChoiceMapper" >
+  <resultMap id="BaseResultMap" type="com.meng.onlinehomework.pojo.Choice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="homeworkid" property="homeworkid" jdbcType="INTEGER" />
+    <result column="questionnumber" property="questionnumber" jdbcType="INTEGER" />
+    <result column="question" property="question" jdbcType="VARCHAR" />
+    <result column="answera" property="answera" jdbcType="VARCHAR" />
+    <result column="answerb" property="answerb" jdbcType="VARCHAR" />
+    <result column="answerc" property="answerc" jdbcType="VARCHAR" />
+    <result column="answerd" property="answerd" jdbcType="VARCHAR" />
+    <result column="answere" property="answere" jdbcType="VARCHAR" />
+    <result column="answerf" property="answerf" jdbcType="VARCHAR" />
+    <result column="answerg" property="answerg" jdbcType="VARCHAR" />
+    <result column="correctanswer" property="correctanswer" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, homeworkid, questionnumber, question, answera, answerb, answerc, answerd, answere, 
+    answerf, answerg, correctanswer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from choice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByHomeworkId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from choice
+    where homeworkid = #{homeworkid,jdbcType=INTEGER} order by questionnumber
+  </select>
+  <select id="selectBykeyword" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from choice
+    where question like "%"#{keyword}"%"
+  </select>
+  <select id="selectAllChoice" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from choice
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from choice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+   <delete id="deleteByHomeworkId" parameterType="java.lang.Integer" >
+    delete from choice
+    where homeworkid = #{homeworkid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.meng.onlinehomework.pojo.Choice" >
+    insert into choice (id, homeworkid, questionnumber, 
+      question, answera, answerb, 
+      answerc, answerd, answere, 
+      answerf, answerg, correctanswer
+      )
+    values (#{id,jdbcType=INTEGER}, #{homeworkid,jdbcType=INTEGER}, #{questionnumber,jdbcType=INTEGER}, 
+      #{question,jdbcType=VARCHAR}, #{answera,jdbcType=VARCHAR}, #{answerb,jdbcType=VARCHAR}, 
+      #{answerc,jdbcType=VARCHAR}, #{answerd,jdbcType=VARCHAR}, #{answere,jdbcType=VARCHAR}, 
+      #{answerf,jdbcType=VARCHAR}, #{answerg,jdbcType=VARCHAR}, #{correctanswer,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.meng.onlinehomework.pojo.Choice" >
+    insert into choice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="homeworkid != null" >
+        homeworkid,
+      </if>
+      <if test="questionnumber != null" >
+        questionnumber,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+      <if test="answera != null" >
+        answera,
+      </if>
+      <if test="answerb != null" >
+        answerb,
+      </if>
+      <if test="answerc != null" >
+        answerc,
+      </if>
+      <if test="answerd != null" >
+        answerd,
+      </if>
+      <if test="answere != null" >
+        answere,
+      </if>
+      <if test="answerf != null" >
+        answerf,
+      </if>
+      <if test="answerg != null" >
+        answerg,
+      </if>
+      <if test="correctanswer != null" >
+        correctanswer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkid != null" >
+        #{homeworkid,jdbcType=INTEGER},
+      </if>
+      <if test="questionnumber != null" >
+        #{questionnumber,jdbcType=INTEGER},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answera != null" >
+        #{answera,jdbcType=VARCHAR},
+      </if>
+      <if test="answerb != null" >
+        #{answerb,jdbcType=VARCHAR},
+      </if>
+      <if test="answerc != null" >
+        #{answerc,jdbcType=VARCHAR},
+      </if>
+      <if test="answerd != null" >
+        #{answerd,jdbcType=VARCHAR},
+      </if>
+      <if test="answere != null" >
+        #{answere,jdbcType=VARCHAR},
+      </if>
+      <if test="answerf != null" >
+        #{answerf,jdbcType=VARCHAR},
+      </if>
+      <if test="answerg != null" >
+        #{answerg,jdbcType=VARCHAR},
+      </if>
+      <if test="correctanswer != null" >
+        #{correctanswer,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.meng.onlinehomework.pojo.Choice" >
+    update choice
+    <set >
+      <if test="homeworkid != null" >
+        homeworkid = #{homeworkid,jdbcType=INTEGER},
+      </if>
+      <if test="questionnumber != null" >
+        questionnumber = #{questionnumber,jdbcType=INTEGER},
+      </if>
+      <if test="question != null" >
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answera != null" >
+        answera = #{answera,jdbcType=VARCHAR},
+      </if>
+      <if test="answerb != null" >
+        answerb = #{answerb,jdbcType=VARCHAR},
+      </if>
+      <if test="answerc != null" >
+        answerc = #{answerc,jdbcType=VARCHAR},
+      </if>
+      <if test="answerd != null" >
+        answerd = #{answerd,jdbcType=VARCHAR},
+      </if>
+      <if test="answere != null" >
+        answere = #{answere,jdbcType=VARCHAR},
+      </if>
+      <if test="answerf != null" >
+        answerf = #{answerf,jdbcType=VARCHAR},
+      </if>
+      <if test="answerg != null" >
+        answerg = #{answerg,jdbcType=VARCHAR},
+      </if>
+      <if test="correctanswer != null" >
+        correctanswer = #{correctanswer,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.meng.onlinehomework.pojo.Choice" >
+    update choice
+    set homeworkid = #{homeworkid,jdbcType=INTEGER},
+      questionnumber = #{questionnumber,jdbcType=INTEGER},
+      question = #{question,jdbcType=VARCHAR},
+      answera = #{answera,jdbcType=VARCHAR},
+      answerb = #{answerb,jdbcType=VARCHAR},
+      answerc = #{answerc,jdbcType=VARCHAR},
+      answerd = #{answerd,jdbcType=VARCHAR},
+      answere = #{answere,jdbcType=VARCHAR},
+      answerf = #{answerf,jdbcType=VARCHAR},
+      answerg = #{answerg,jdbcType=VARCHAR},
+      correctanswer = #{correctanswer,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="AddCorrectByHIdandQnum" >
+    update choice
+    set correctanswer = #{correctanswer}
+    where homeworkid = #{homeworkid} and questionnumber = #{questionnumber}
+  </update>
+</mapper>

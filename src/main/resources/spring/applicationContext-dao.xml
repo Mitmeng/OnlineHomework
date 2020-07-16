@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+    
+    <!-- 配置 读取properties文件 jdbc.properties -->
+	<!--<context:property-placeholder location="classpath:properties/jdbc.properties" />-->
+    
+	<!-- 配置 数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/onlinehomework?characterEncoding=utf-8" />
+		<property name="user" value="root" />
+		<property name="password" value="1234" />
+		
+		<!-- 若数据库中连接数不足时，一次向数据库服务器申请多少个连接    -->
+        <property name="acquireIncrement" value="5" />
+        <!-- 初始化数据库连接时连接的数量 -->
+        <property name="initialPoolSize" value="10" />
+        <!-- 数据库连接池中最小的数据库连接数 -->
+        <property name="minPoolSize" value="10" />
+         <!-- 数据库连接池中最大的数据库连接数 -->
+        <property name="maxPoolSize" value="200" />
+        <!-- 获取连接超时时间 -->
+        <property name="checkoutTimeout" value="10000" />
+        <!-- 当获取连接失败重试次数 -->
+        <property name="acquireRetryAttempts" value="2" />
+	</bean>
+	
+	<!-- 配置SqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 设置数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+		<!-- 注册mapper.xm -->
+		<property name="mapperLocations" value="classpath:mappers/*.xml"/>
+	</bean>
+	
+	<!-- 配置Mapper扫描，DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	    <!-- 注入sqlSessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<!-- 设置Mapper扫描包 -->
+		<property name="basePackage" value="com.meng.onlinehomework.dao" />
+	</bean>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+    <property name="maxUploadSize" value="209715200" />     
+    <property name="defaultEncoding" value="UTF-8" />  
+    <property name="resolveLazily" value="true" />  
+</bean> 
+	
+</beans>

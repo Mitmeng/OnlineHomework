@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meng.onlinehomework.dao.StuhomeworkMapper" >
+  <resultMap id="BaseResultMap" type="com.meng.onlinehomework.pojo.Stuhomework" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="homeworkid" property="homeworkid" jdbcType="INTEGER" />
+    <result column="homeworktitle" property="homeworktitle" jdbcType="VARCHAR" />
+    <result column="homeworktype" property="homeworktype" jdbcType="INTEGER" />
+    <result column="stuid" property="stuid" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="submits" property="submits" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, homeworkid, homeworktitle, homeworktype, stuid, content, submits, score
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByhomeworkid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where homeworkid = #{homeworkid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByhomeworkidtype" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where homeworkid = #{homeworkid} and score = #{score} and submits=#{submits}
+  </select>
+  <select id="selectBystuIdandScore" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where stuid = #{stuid} and submits=#{submits}
+  </select>
+  <select id="selecthomeworkIDbystuId" resultType="java.lang.String">
+    select homeworkid
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where stuid = #{stuid} and (score = #{score} or submits=#{submits})
+  </select>
+  <select id="selectCountBySubmit" resultType="java.lang.Integer">
+    select count(*)
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where homeworkid = #{homeworkid} and submits=1
+  </select>
+  <select id="selectByHomeworkIdandStuId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where homeworkid = #{homeworkid} and stuid=#{stuid}
+  </select>
+   <select id="selectCountBySubScore" resultType="java.lang.Integer">
+    select count(*)
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where homeworkid = #{homeworkid} and submits=1 and score=0
+  </select>
+  <select id="getscoreAvgByHomeworkid" resultType="java.lang.Double" parameterType="java.lang.Integer">
+    select avg(score)
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where homeworkid = #{homeworkid}
+  </select>
+  <select id="getgoodScoreByHomeworkid" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select count(*)
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where homeworkid = #{homeworkid} and score &gt;= 90
+  </select>
+  <select id="getpassScoreByHomeworkid" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select count(*)
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where homeworkid = #{homeworkid} and score &gt;= 60
+  </select>
+  <select id="selectByStuid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where stuid = #{stuid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectcountByScore" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select count(*)
+    <include refid="Base_Column_List" />
+    from stuhomework
+    where homeworkid = #{homeworkid} and score &gt;= #{min} and score &lt; #{max}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stuhomework
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByHomeworkId" parameterType="java.lang.Integer" >
+    delete from stuhomework
+    where homeworkid = #{homeworkid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByIdAndStuid" >
+    delete from stuhomework
+    where stuid = #{stuid} and homeworkid = #{homeworkid}
+  </delete>
+   <delete id="deleteByStuid" parameterType="java.lang.String" >
+    delete from stuhomework
+    where stuid = #{stuid}
+  </delete>
+  <insert id="insert" parameterType="com.meng.onlinehomework.pojo.Stuhomework" >
+    insert into stuhomework (id, homeworkid, homeworktitle, 
+      homeworktype, stuid, content, 
+      submits, score)
+    values (#{id,jdbcType=INTEGER}, #{homeworkid,jdbcType=INTEGER}, #{homeworktitle,jdbcType=VARCHAR}, 
+      #{homeworktype,jdbcType=INTEGER}, #{stuid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{submits,jdbcType=INTEGER}, #{score,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.meng.onlinehomework.pojo.Stuhomework" >
+    insert into stuhomework
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="homeworkid != null" >
+        homeworkid,
+      </if>
+      <if test="homeworktitle != null" >
+        homeworktitle,
+      </if>
+      <if test="homeworktype != null" >
+        homeworktype,
+      </if>
+      <if test="stuid != null" >
+        stuid,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="submits != null" >
+        submits,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="homeworkid != null" >
+        #{homeworkid,jdbcType=INTEGER},
+      </if>
+      <if test="homeworktitle != null" >
+        #{homeworktitle,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworktype != null" >
+        #{homeworktype,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null" >
+        #{stuid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="submits != null" >
+        #{submits,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.meng.onlinehomework.pojo.Stuhomework" >
+    update stuhomework
+    <set >
+      <if test="homeworkid != null" >
+        homeworkid = #{homeworkid,jdbcType=INTEGER},
+      </if>
+      <if test="homeworktitle != null" >
+        homeworktitle = #{homeworktitle,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworktype != null" >
+        homeworktype = #{homeworktype,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null" >
+        stuid = #{stuid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="submits != null" >
+        submits = #{submits,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.meng.onlinehomework.pojo.Stuhomework" >
+    update stuhomework
+    set homeworkid = #{homeworkid,jdbcType=INTEGER},
+      homeworktitle = #{homeworktitle,jdbcType=VARCHAR},
+      homeworktype = #{homeworktype,jdbcType=INTEGER},
+      stuid = #{stuid,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      submits = #{submits,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updatescordById" >
+    update stuhomework
+    set score = #{score},
+    submits =1
+    where id = #{id}
+  </update>
+  <update id="insertScoreBymap" >
+    update stuhomework
+    set content = #{content},
+    score = #{score},
+    submits =1
+    where stuid = #{stuid} and homeworkid = #{homeworkid}
+  </update>
+  <update id="updateContentById" >
+    update stuhomework
+    set content = #{content},
+    submits =#{submits}
+    where id = #{id} 
+  </update>
+  <update id="updatedelById" >
+    update stuhomework
+    set content = null,
+    submits =0,
+    score=0
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByHomeworkid" >
+    update stuhomework
+    set homeworktitle=#{title}
+    where homeworkid = #{id}
+  </update>
+</mapper>

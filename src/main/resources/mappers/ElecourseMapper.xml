@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meng.onlinehomework.dao.ElecourseMapper" >
+  <resultMap id="BaseResultMap" type="com.meng.onlinehomework.pojo.Elecourse" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="teachername" property="teachername" jdbcType="VARCHAR" />
+    <result column="courseid" property="courseid" jdbcType="VARCHAR" />
+    <result column="coursename" property="coursename" jdbcType="VARCHAR" />
+    <result column="stuid" property="stuid" jdbcType="VARCHAR" />
+    <result column="stuname" property="stuname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, teachername, courseid, coursename, stuid, stuname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from elecourse
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCourseId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from elecourse
+    where courseid = #{courseid,jdbcType=VARCHAR}
+  </select>
+  <select id="selecCourseBystuid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from elecourse
+    where stuid = #{stuid,jdbcType=VARCHAR}
+  </select>
+  <select id="findByStuidAndCourseid" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from elecourse
+    where stuid = #{stuid} and courseid=#{courseid}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from elecourse
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByCourseid" parameterType="java.lang.String" >
+    delete from elecourse
+    where courseid = #{courseid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.meng.onlinehomework.pojo.Elecourse" >
+    insert into elecourse (id, teachername, courseid, 
+      coursename, stuid, stuname
+      )
+    values (#{id,jdbcType=INTEGER}, #{teachername,jdbcType=VARCHAR}, #{courseid,jdbcType=VARCHAR}, 
+      #{coursename,jdbcType=VARCHAR}, #{stuid,jdbcType=VARCHAR}, #{stuname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.meng.onlinehomework.pojo.Elecourse" >
+    insert into elecourse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teachername != null" >
+        teachername,
+      </if>
+      <if test="courseid != null" >
+        courseid,
+      </if>
+      <if test="coursename != null" >
+        coursename,
+      </if>
+      <if test="stuid != null" >
+        stuid,
+      </if>
+      <if test="stuname != null" >
+        stuname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teachername != null" >
+        #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="coursename != null" >
+        #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="stuid != null" >
+        #{stuid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null" >
+        #{stuname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.meng.onlinehomework.pojo.Elecourse" >
+    update elecourse
+    <set >
+      <if test="teachername != null" >
+        teachername = #{teachername,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        courseid = #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="coursename != null" >
+        coursename = #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="stuid != null" >
+        stuid = #{stuid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null" >
+        stuname = #{stuname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.meng.onlinehomework.pojo.Elecourse" >
+    update elecourse
+    set teachername = #{teachername,jdbcType=VARCHAR},
+      courseid = #{courseid,jdbcType=VARCHAR},
+      coursename = #{coursename,jdbcType=VARCHAR},
+      stuid = #{stuid,jdbcType=VARCHAR},
+      stuname = #{stuname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

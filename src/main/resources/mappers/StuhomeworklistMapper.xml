@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meng.onlinehomework.dao.StuhomeworklistMapper" >
+  <resultMap id="BaseResultMap" type="com.meng.onlinehomework.pojo.Stuhomeworklist" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stuid" property="stuid" jdbcType="VARCHAR" />
+    <result column="stuname" property="stuname" jdbcType="VARCHAR" />
+    <result column="answer1" property="answer1" jdbcType="VARCHAR" />
+    <result column="answer2" property="answer2" jdbcType="VARCHAR" />
+    <result column="answer3" property="answer3" jdbcType="VARCHAR" />
+    <result column="answer4" property="answer4" jdbcType="VARCHAR" />
+    <result column="answer5" property="answer5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, stuid, stuname, answer1, answer2, answer3, answer4, answer5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stuhomeworklist
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stuhomeworklist
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByStuid" parameterType="java.lang.String" >
+    delete from stuhomeworklist
+    where stuid = #{stuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.meng.onlinehomework.pojo.Stuhomeworklist" >
+    insert into stuhomeworklist (id, stuid, stuname, 
+      answer1, answer2, answer3, 
+      answer4, answer5)
+    values (#{id,jdbcType=INTEGER}, #{stuid,jdbcType=VARCHAR}, #{stuname,jdbcType=VARCHAR}, 
+      #{answer1,jdbcType=VARCHAR}, #{answer2,jdbcType=VARCHAR}, #{answer3,jdbcType=VARCHAR}, 
+      #{answer4,jdbcType=VARCHAR}, #{answer5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.meng.onlinehomework.pojo.Stuhomeworklist" >
+    insert into stuhomeworklist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stuid != null" >
+        stuid,
+      </if>
+      <if test="stuname != null" >
+        stuname,
+      </if>
+      <if test="answer1 != null" >
+        answer1,
+      </if>
+      <if test="answer2 != null" >
+        answer2,
+      </if>
+      <if test="answer3 != null" >
+        answer3,
+      </if>
+      <if test="answer4 != null" >
+        answer4,
+      </if>
+      <if test="answer5 != null" >
+        answer5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null" >
+        #{stuid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null" >
+        #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="answer1 != null" >
+        #{answer1,jdbcType=VARCHAR},
+      </if>
+      <if test="answer2 != null" >
+        #{answer2,jdbcType=VARCHAR},
+      </if>
+      <if test="answer3 != null" >
+        #{answer3,jdbcType=VARCHAR},
+      </if>
+      <if test="answer4 != null" >
+        #{answer4,jdbcType=VARCHAR},
+      </if>
+      <if test="answer5 != null" >
+        #{answer5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.meng.onlinehomework.pojo.Stuhomeworklist" >
+    update stuhomeworklist
+    <set >
+      <if test="stuid != null" >
+        stuid = #{stuid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null" >
+        stuname = #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="answer1 != null" >
+        answer1 = #{answer1,jdbcType=VARCHAR},
+      </if>
+      <if test="answer2 != null" >
+        answer2 = #{answer2,jdbcType=VARCHAR},
+      </if>
+      <if test="answer3 != null" >
+        answer3 = #{answer3,jdbcType=VARCHAR},
+      </if>
+      <if test="answer4 != null" >
+        answer4 = #{answer4,jdbcType=VARCHAR},
+      </if>
+      <if test="answer5 != null" >
+        answer5 = #{answer5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.meng.onlinehomework.pojo.Stuhomeworklist" >
+    update stuhomeworklist
+    set stuid = #{stuid,jdbcType=VARCHAR},
+      stuname = #{stuname,jdbcType=VARCHAR},
+      answer1 = #{answer1,jdbcType=VARCHAR},
+      answer2 = #{answer2,jdbcType=VARCHAR},
+      answer3 = #{answer3,jdbcType=VARCHAR},
+      answer4 = #{answer4,jdbcType=VARCHAR},
+      answer5 = #{answer5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
